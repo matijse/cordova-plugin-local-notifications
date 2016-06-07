@@ -201,6 +201,13 @@ public class Options {
     }
 
     /**
+     *  Notification buttons / actions.
+     */
+    public JSONArray getActions() {
+        return options.optJSONArray("actions");
+    }
+    
+    /**
      *  Boolean to trigger heads-up notification, or normal
      */
     public Boolean getHeadsUp() {
@@ -354,6 +361,13 @@ public class Options {
         String icon = options.optString("smallIcon", "");
 
         return assets.getResIdForDrawable(icon);
+    }
+
+    /**
+     *  Get drawable using a string value.
+     */
+    public int getIconFromString(String iconStr) {
+        return assets.getResIdForDrawable(iconStr);
     }
 
     /**

@@ -73,6 +73,7 @@ exports.applyPlatformSpecificOptions = function () {
         defaults.vibration = true;
         defaults.style     = 'default';
         defaults.inbox     = undefined;
+        defaults.actions   = undefined;
         break;
     }
 
