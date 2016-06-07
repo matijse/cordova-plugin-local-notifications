@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.util.Random;
 
@@ -139,6 +140,36 @@ public class Builder {
         //Enable/Disable vibration
         if(!options.getVibration()) {
             builder.setVibrate(new long[]{0, 0});
+        }
+
+
+        //Set style
+        String style = options.getStyle();
+
+        if(style.equals("inbox")) {
+            NotificationCompat.InboxStyle notificationStyle = new NotificationCompat.InboxStyle();
+            JSONObject inbox = options.getInbox();
+            if(inbox != null) {
+                JSONArray lines = inbox.optJSONArray("lines");
+                String summary = inbox.optString("summary", "");
+                String title = inbox.optString("title", "");
+
+                if(title != null && title != "") {
+                    notificationStyle.setBigContentTitle(title);
+                }
+                if(summary != null && summary != "") {
+                    notificationStyle.setSummaryText(summary);
+                }
+                if(lines != null) {
+                    for( int i = 0; i < lines.length(); i++) {
+                        notificationStyle.addLine(lines.optString(i,""));
+                    }
+                }
+            }
+            builder.setStyle(notificationStyle);
+        }
+        else if (style.equals("bigtext")) {
+            builder.setStyle(new NotificationCompat.BigTextStyle().bigText(options.getText()));
         }
 
         if (ledColor != 0) {

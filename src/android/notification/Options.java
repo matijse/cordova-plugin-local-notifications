@@ -31,6 +31,7 @@ import android.support.v4.app.NotificationCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.util.Date;
 
@@ -212,6 +213,20 @@ public class Options {
      public boolean getVibration() {
          return options.optBoolean("vibration",true);
      }
+
+    /**
+     *  String to set the style of the notification.
+     */
+    public String getStyle() {
+        return options.optString("style");
+    }
+    
+    /**
+     *  Inbox object for inbox style notification.
+     */
+    public JSONObject getInbox() {
+        return options.optJSONObject("inbox");
+    }
 
     /**
      * ID for the local notification as a string.

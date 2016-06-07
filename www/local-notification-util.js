@@ -71,6 +71,8 @@ exports.applyPlatformSpecificOptions = function () {
         defaults.color     = undefined;
         defaults.headsup   = false;
         defaults.vibration = true;
+        defaults.style     = 'default';
+        defaults.inbox     = undefined;
         break;
     }
 
