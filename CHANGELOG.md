@@ -3,6 +3,15 @@ ChangeLog
 
 Please also read the [Upgrade Guide](https://github.com/katzer/cordova-plugin-local-notifications/wiki/Upgrade-Guide) for more information.
 
+#### DavidBriglio Fork
+- Android:
+    - Implemented heads-up notifications
+    - Implemented action buttons
+    - Implemented styles (bigtextview and inbox)
+    - Fixed 'update' method to update notifications without firing another notification
+    - Implemented notification vibration enable/disable boolean
+    - Updated "ongoing" to prevent the notification from clearing after being clicked
+
 #### Version 0.8.4 (04.01.2016)
 - Bug fixes
  - SyntaxError: missing ) after argument list

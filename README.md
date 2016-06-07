@@ -1,9 +1,163 @@
 
+
+Cordova Local-Notification Plugin [DavidBriglio Fork]
+=================================
+
+This was forked from Katzer's cordova-plugin-local-notifications and altered to implement the following features on Android:
+- Heads-Up Notifications
+- Action buttons
+- Disabling notification vibration boolean
+- Updating "ongoing" to prevent the notification from clearing after being clicked
+- Updating notifications without re-firing the notification
+- Styles (bigtextview and inbox)
+
+
+## Installation
+Through CLI this plugin can be installed with:
+```
+cordova plugin add https://github.com/DavidBriglio/cordova-plugin-local-notifications
+```
+
+
+## Examples
+```javascript
+
+//Inbox style
+cordova.plugins.notification.local.schedule({
+    id: 1,
+    style: "inbox",
+    vibration: false, //Prevent the notification from vibrating
+    title: "My Messages", //The title of the notification before it is expanded
+    text: "Expand for messages", //The text before expand
+    inbox: {
+        lines: ["Line1", "Line2", "Line3"], //You can add as many lines as the notification allows
+        summary: "2 More", //Optional summary line that shows at the bottom of the notification
+        title: "3 Messages" //Optional title to replace the notification on expand
+    }
+});
+
+//BigTextView with heads-up + action buttons
+cordova.plugins.notification.local.schedule({
+    id: 1,
+    title: "Big Text",
+    style: "bigtextview",
+    //vibration: true, //The default when vibration is omitted is true
+    text: "Line1 \n Line2 \n Line3", //Lines are seperated by newlines
+    headsup: true,  //If excluded the default is false (as seen above)
+    actions: [
+        { 
+            text: "MAP",
+            icon: "res://ic_menu_mapmode", //A drawable icon (Optional)
+            action: 0   //Any additional values apart from text and icon will be transfered along
+						//to be used in your handler function. Here I used "action", but you can
+						//add multiple fields with any key/value. See below for more details.
+        },
+        {
+            text: "Select",
+            action: 1,
+			myAction: "action1"
+        },
+        {
+            text: "Ignore",
+            action: 2,
+			anotherValue: 0
+        }
+        //Note: There can only be up to three actions (enforced by android)
+    ]
+});
+
+```
+
+## How Actions Are Handled
+
+When you add your action to the notification, the only required field is "text". This will display the action button
+without any icon. When the action is clicked it will fire a "click" event, passing into it the entry in the actions
+array. This entry will have an inserted "notification" element containing the rest of the notification. This allows
+any key/value inserted into your action element in the actions array to be passed into the handler function.
+
+ie: 
+
+```javascript
+cordova.plugins.notification.local.schedule({
+	id: 1,
+	title: "Test",
+	actions: [
+		{
+			text: "Action1", 
+			val: 1
+		},
+		{
+			text: "Action2",
+			val: 100
+		}
+	]
+});
+```
+
+When "Action1" is clicked, the "click" event will fire, sending this as the notification parameter:
+
+```javascript
+{
+	text: "Action1",
+	val: 1,
+	notification: {
+		id: 1,
+		title: "Test",
+		actions: [
+			{
+				text: "Action1", 
+				val: 1
+			},
+			{
+				text: "Action2",
+				val: 100
+			}
+		]
+	}
+}
+```
+
+## Updated Update
+
+Now when using the "update" method, the notification will update without re-firing the notification. When scheduling
+with the same ID the notification will still re-fire.
+
+
+This code will cause a notification to be displayed, and be updated (only firing the notification once).
+```javascript
+cordova.plugins.notification.local.schedule({
+	id: 1,
+	title: "Test",
+	text: "This is a test."
+});
+
+cordova.plugins.notification.local.update({
+	id: 1,
+	title: "Updated Test",
+	text: "Updated."
+});
+```
+
+This code will cause a notification to be displayed, and another to replace it (firing two notifications).
+```javascript
+cordova.plugins.notification.local.schedule({
+	id: 1,
+	title: "Test",
+	text: "This is a test."
+});
+
+cordova.plugins.notification.local.schedule({
+	id: 1,
+	title: "Updated Test",
+	text: "Updated."
+});
+```
+
+Katzer
+=================================
+
 [![npm version](https://badge.fury.io/js/de.appplant.cordova.plugin.local-notification.svg)](http://badge.fury.io/js/de.appplant.cordova.plugin.local-notification)
 [![PayPayl donate button](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=L3HKQCD9UA35A "Donate once-off to this project using Paypal")
-
-Cordova Local-Notification Plugin
-=================================
 
 The essential purpose of local notifications is to enable an application to inform its users that it has something for them — for example, a message or an upcoming appointment — when the application isn’t running in the foreground.<br>
 They are scheduled by an application and delivered on the same device.
@@ -64,7 +218,6 @@ Find out more informations [here][wiki_kitchensink] in our wiki.
 We are proud to announce our newest release version 0.8.x. Beside the hard work at the office and at the weekends it contains a lot of goodies, new features and easy to use APIs.
 
 Find out more informations [here][wiki_changelog] in our wiki.
-
 
 ## Sample
 The sample demonstrates how to schedule a local notification which repeats every week. The listener will be called when the user has clicked on the local notification.
