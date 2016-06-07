@@ -136,6 +136,11 @@ public class Builder {
             builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         }
         
+        //Enable/Disable vibration
+        if(!options.getVibration()) {
+            builder.setVibrate(new long[]{0, 0});
+        }
+
         if (ledColor != 0) {
             builder.setLights(ledColor, 100, 100);
         }

@@ -70,6 +70,7 @@ exports.applyPlatformSpecificOptions = function () {
         defaults.led       = undefined;
         defaults.color     = undefined;
         defaults.headsup   = false;
+        defaults.vibration = true;
         break;
     }
 
