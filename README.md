@@ -45,7 +45,7 @@ cordova.plugins.notification.local.schedule({
     text: "Line1 \n Line2 \n Line3", //Lines are seperated by newlines
     headsup: true,  //If excluded the default is false (as seen above)
     actions: [
-        { 
+        {
             text: "MAP",
             icon: "res://ic_menu_mapmode", //A drawable icon (Optional)
             action: 0   //Any additional values apart from text and icon will be transfered along
@@ -71,11 +71,10 @@ cordova.plugins.notification.local.schedule({
 ## How Actions Are Handled
 
 When you add your action to the notification, the only required field is "text". This will display the action button
-without any icon. When the action is clicked it will fire a "click" event, passing into it the entry in the actions
-array. This entry will have an inserted "notification" element containing the rest of the notification. This allows
+without any icon. When the action is clicked it will fire a "click" event, passing into it the notification. The notification will have an inserted "actionClicked" element containing the action that was clicked. This allows
 any key/value inserted into your action element in the actions array to be passed into the handler function.
 
-ie: 
+ie:
 
 ```javascript
 cordova.plugins.notification.local.schedule({
@@ -83,7 +82,7 @@ cordova.plugins.notification.local.schedule({
 	title: "Test",
 	actions: [
 		{
-			text: "Action1", 
+			text: "Action1",
 			val: 1
 		},
 		{
@@ -98,24 +97,34 @@ When "Action1" is clicked, the "click" event will fire, sending this as the noti
 
 ```javascript
 {
-	text: "Action1",
-	val: 1,
-	notification: {
-		id: 1,
-		title: "Test",
-		actions: [
-			{
-				text: "Action1", 
-				val: 1
-			},
-			{
-				text: "Action2",
-				val: 100
-			}
-		]
-	}
+  actionClicked:{
+    text: "Action1",
+  	val: 1
+  },
+  id: 1,
+	title: "Test",
+	actions: [
+		{
+			text: "Action1",
+			val: 1
+		},
+		{
+			text: "Action2",
+			val: 100
+		}
+	]
 }
 ```
+
+Sample handler:
+
+```javascript
+  cordova.plugins.notification.local.on("click",function(notification)
+  {
+    alert(notification.actionClicked.val);
+  });
+```
+
 
 ## Updated Update
 
