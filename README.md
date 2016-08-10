@@ -102,17 +102,17 @@ When "Action1" is clicked, the "click" event will fire, sending this as the noti
   	val: 1
   },
   id: 1,
-	title: "Test",
-	actions: [
-		{
-			text: "Action1",
-			val: 1
-		},
-		{
-			text: "Action2",
-			val: 100
-		}
-	]
+  title: "Test",
+  actions: [
+	  {
+	    text: "Action1",
+	    val: 1
+	  },
+	  {
+	    text: "Action2",
+	    val: 100
+	  }
+  ]
 }
 ```
 
