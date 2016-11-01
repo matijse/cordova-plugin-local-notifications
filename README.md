@@ -3,13 +3,18 @@
 Cordova Local-Notification Plugin [DavidBriglio Fork]
 =================================
 
-This was forked from Katzer's cordova-plugin-local-notifications and altered to implement the following features on Android:
+This was forked from Katzer's cordova-plugin-local-notifications and altered to implement the following features:
+
+Android:
 - Heads-Up Notifications
 - Action buttons
 - Disabling notification vibration boolean
 - Updating "ongoing" to prevent the notification from clearing after being clicked
 - Updating notifications without re-firing the notification
 - Styles (bigtextview and inbox)
+
+iOS:
+- iOS 10 support
 
 
 ## Installation
