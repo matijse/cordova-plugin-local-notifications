@@ -172,7 +172,9 @@ class AssetUtil {
             outStream.flush();
             outStream.close();
 
-            return Uri.fromFile(file);
+            Uri contentUri = FileProvider.getUriForFile(context, "de.appplant.cordova.plugin.notification.fileprovider", file);
+            //return Uri.fromFile(file);
+            return contentUri;
 
         } catch (Exception e) {
             Log.e("Asset", "File not found: assets/" + resPath);
@@ -408,7 +410,7 @@ class AssetUtil {
      *      File with the provided name
      */
     private File getTmpFile (String name) {
-        File dir = context.getExternalCacheDir();
+        File dir = context.getCacheDir();
 
         if (dir == null) {
             Log.e("Asset", "Missing external cache dir");

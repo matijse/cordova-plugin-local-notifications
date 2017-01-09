@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-local-notifications-db"
-        version="0.8.4">
+        version="0.8.5">
 
     <name>LocalNotification</name>
 
@@ -136,6 +136,16 @@
                 android:theme="@android:style/Theme.NoDisplay"
                 android:exported="false" />
 
+            <provider
+                android:name="android.support.v4.content.FileProvider"
+                android:authorities="de.appplant.cordova.plugin.notification.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+                <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/storage_paths" />
+            </provider>
+
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
@@ -210,6 +220,10 @@
         <source-file
             src="src/android/notification/TriggerReceiver.java"
             target-dir="src/de/appplant/cordova/plugin/notification" />
+
+        <source-file
+                src="src/android/storage_paths.xml"
+                target-dir="res/xml" />
 
     </platform>
 
